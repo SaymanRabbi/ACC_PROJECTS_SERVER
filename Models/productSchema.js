@@ -11,7 +11,7 @@ module.exports.productSchema = mongoose.Schema({
     price:{
         type:Number,
         required:[true,'Please add a price'],
-        min:[1,'Price cannot be less than 1'],
+        min:[0,'Price cannot be less than 1'],
     },
         discription:{
             type:String,
@@ -28,7 +28,7 @@ module.exports.productSchema = mongoose.Schema({
       quantity:{
         type:Number,
         required:[true,'Please add a quantity'],
-        min:[1,'Quantity cannot be less than 1'],
+        min:[0,'Quantity cannot be less than 1'],
         validate:{
             validator:(value)=>{
              const isIntiger = Number.isInteger(value);
