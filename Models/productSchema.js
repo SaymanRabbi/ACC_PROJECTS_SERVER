@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-
-const productSchema = mongoose.Schema({
+module.exports.productSchema = mongoose.Schema({
     name:{
         type:String,
         required:[true,'Please add a name'],
@@ -14,7 +13,7 @@ const productSchema = mongoose.Schema({
         required:[true,'Please add a price'],
         min:[1,'Price cannot be less than 1'],
     },
-        discricption:{
+        discription:{
             type:String,
             required:[true,'Please add a description'],
         },
@@ -45,8 +44,8 @@ const productSchema = mongoose.Schema({
         type:String,
         required:[true,'Please add a status'],
         enum:{
-            value:["inStock","outOfStock","discontinued"],
-            message:`status can't be ${value}`
+            values:["inStock","outOfStock","discontinued"],
+            message:`status can't be`
         }
       },
     //   createAt:{
@@ -57,18 +56,18 @@ const productSchema = mongoose.Schema({
     //     type:Date,
     //     default:Date.now
     //   }
-supplier:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:'Supplier',
+// supplier:{
+//     type:mongoose.Schema.Types.ObjectId,
+//     ref:'Supplier',
 
-},
-categories:[{
-    name:{
-        type:String,
-        required:[true,'Please add a name'],
-    },
-    _id:mongoose.Schema.Types.ObjectId,
-}]
+// },
+// categories:[{
+//     name:{
+//         type:String,
+//         required:[true,'Please add a name'],
+//     },
+//     _id:mongoose.Schema.Types.ObjectId,
+// }]
 },{
     timestamps:true
 })
