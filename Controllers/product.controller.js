@@ -24,21 +24,27 @@ exports.getProductControler = async (req,res,next)=>{
       //sort,limit,page --> exclude
       const excludeFields = ['sort','limit','page'];
       excludeFields.forEach(field=>delete productObj[field]);
-    
       let queryStr = JSON.stringify(productObj);
           queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g,match=>`$${match}`);
          productObj = JSON.parse(queryStr);
-
-
       const queries = {}
+      //sort
       if(req.query.sort){
         const sortBy = req.query.sort.split(',').join(' ');
         queries.sortBy = sortBy;
       }
+      //filtering
       if(req.query.fields){
         const fields = req.query.fields.split(',').join(' ');
         queries.fields = fields;
       }
+      //pagination
+        if(req.query.page){
+        const {page =1,limit = 10} = req.query;
+        const skip = (page-1)*parseInt(limit);
+        queries.skip = skip;
+        queries.limit = parseInt(limit);
+        }
     const data = await getProducts(productObj,queries);
          res.status(200).send({
             status:"success",

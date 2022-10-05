@@ -1,7 +1,12 @@
 const Product =  require("../Models/ProductSchema");
 exports.getProducts= async(productObj,queries)=>{
- const products = await Product.find(productObj).select(queries.fields).sort(queries.sortBy);
-return products;
+ const products = await Product.find(productObj)
+ .skip(queries.skip)
+ .limit(queries.limit)
+ .select(queries.fields)
+ .sort(queries.sortBy);
+ const toatalProducts = await Product.countDocuments(productObj);
+return {products,toatalProducts};
 }
 exports.postProducts =async(product)=>{
     const newProduct = new Product(product);
