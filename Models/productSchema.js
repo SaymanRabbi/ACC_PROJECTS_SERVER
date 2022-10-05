@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
-module.exports.productSchema = mongoose.Schema({
+const productSchema = mongoose.Schema({
     name:{
         type:String,
+        unique:true,
         required:[true,'Please add a name'],
         trim:true,
         maxLength:[100,'Product name cannot exceed 100 characters'],
         minLength:[3,'Product name cannot be less than 2 characters'],
-        unique:true
     },
     price:{
         type:Number,
         required:[true,'Please add a price'],
-        min:[0,'Price cannot be less than 1'],
+        min:[1,'Price cannot be less than 1'],
     },
         discription:{
             type:String,
@@ -71,3 +71,19 @@ module.exports.productSchema = mongoose.Schema({
 },{
     timestamps:true
 })
+// productSchema.pre("save",function(next){
+//   if(this.quantity===0){
+//    this.status = "outofstock";
+//   }
+//    next();
+// })
+// productSchema.post("save",function(doc,next){
+//    console.log("After Saving");
+//    next();
+// })
+// productSchema.methods.logger = function(){
+//    console.log(`data saved for ${this.name}`);
+// }
+const Product = mongoose.model('Product',productSchema) 
+
+module.exports = Product;
