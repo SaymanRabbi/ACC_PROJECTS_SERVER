@@ -19,10 +19,17 @@ module.exports.productControler =async (req,res,next)=>{
 }
 exports.getProductControler = async (req,res,next)=>{
     try {
-       const productObj = {...req.query}
+       let productObj = {...req.query}
+       //gte,gt,lte,lt
       //sort,limit,page --> exclude
       const excludeFields = ['sort','limit','page'];
       excludeFields.forEach(field=>delete productObj[field]);
+    
+      let queryStr = JSON.stringify(productObj);
+          queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g,match=>`$${match}`);
+         productObj = JSON.parse(queryStr);
+
+
       const queries = {}
       if(req.query.sort){
         const sortBy = req.query.sort.split(',').join(' ');
