@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const {ObjectId} = mongoose.Schema.Types;
-const productSchema = mongoose.Schema({
+const stockSchema = mongoose.Schema({
+    productId:{
+        type:ObjectId,
+        ref:"Product",
+        required:[true,'Please add a product id'],
+    },
     name:{
         type:String,
         unique:true,
@@ -41,6 +46,17 @@ const productSchema = mongoose.Schema({
             message:'Please enter a valid url'
         }
       }],
+      price:{
+        type:Number,
+        required:[true,'Please add a price'],
+        min:[0,'Price cannot be less than 0'],
+      },
+      quantity:{
+        type:Number,
+        required:[true,'Please add a price'],
+        min:[0,'quantity cannot be less than 0'],
+      },
+
       category:{
         type:String,
         required:[true,'Please add a category'],
@@ -55,10 +71,47 @@ const productSchema = mongoose.Schema({
          ref:"Brand",
           required:[true,'Please add a brand id']
         }
-      }
+      },
+      status:{
+        type:String,
+        enum:{
+            values:['in-stock','out-of-stock','discontinued'],
+            message:'Please select a valid status'  
+        },
+        required:[true,'Please add a status'],
+      },
+    store:{
+        name:{
+            type:String,
+            trim:true,
+            required:[true,'Please enter store name'],
+            lowercase:true,
+            enum:{
+                values:['dhaka','chattogram','khulna','rajshahi','barisal','sylhet','rangpur'],
+                message:'{VALUE} is not supported'
+            }
+        },
+        id:{
+            type:ObjectId,
+            required:true,
+            ref:"Store"
+        }
+    },
+    suppliedBy:{
+        name:{
+            type:String,
+            trim:true,
+            required:[true,'Please enter supplier name'],
+
+        },
+        id:{
+            type:ObjectId,
+            ref:"Supplier",
+        }
+    }
 },{
     timestamps:true
 })
-const Product = mongoose.model('Product',productSchema) 
+const Stock = mongoose.model('Product',stockSchema) 
 
-module.exports = Product;
+module.exports = Stock;
