@@ -1,4 +1,5 @@
-const Product =  require("../Models/ProductSchema");
+const Product =  require("../Models/ProductSchema")
+const Brand  = require("../Models/Brand")
 exports.getProducts= async(productObj,queries)=>{
  const products = await Product.find(productObj)
  .skip(queries.skip)
@@ -11,6 +12,9 @@ return {products,toatalProducts};
 exports.postProducts =async(product)=>{
     const newProduct = new Product(product);
     const data = await newProduct.save();
+    const {_id:brandID,brand} = data
+    const res = await Brand.updateOne({_id:brand.id},{$push:{products:brandID}}) 
+    console.log(res);
     return data;
 
 }
