@@ -1,6 +1,6 @@
 const { postAbrand,getBrands,getAbrand} = require("../Services/Brand.Services");
 
-module.exports.createAbrand= async(req,res,next)=>{
+module.exports.createAbrand= async(req,res)=>{
     try {
         const brand = await postAbrand(req.body);
        res.status(200).send({
@@ -15,7 +15,7 @@ module.exports.createAbrand= async(req,res,next)=>{
         })
     }
 }
-exports.getBrands = async(req,res,next)=>{
+exports.getBrands = async(req,res)=>{
     try {
         const brand = await getBrands();
         res.status(200).send({
@@ -30,7 +30,7 @@ exports.getBrands = async(req,res,next)=>{
         })
     }
 }
-exports.getAbrand= async(req,res,next)=>{
+exports.getAbrand= async(req,res)=>{
     try {
         const {id} = req.params;
         const brand = await getAbrand(id);
