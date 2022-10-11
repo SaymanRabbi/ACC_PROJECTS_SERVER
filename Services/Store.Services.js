@@ -1,5 +1,5 @@
 const Store = require('../Models/Store');
-exports.getStoreServices = async()=>{
+exports.getStoresServices = async()=>{
     const store = await Store.find({});
     return store;
 }

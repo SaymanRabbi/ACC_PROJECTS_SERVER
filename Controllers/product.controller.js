@@ -1,9 +1,8 @@
-const { getProducts, postProducts,updateProduct,bulkUpdateProduct } = require("../Services/Product.Services");
+const { getProductsServices, postProductServices,updateProductServices,updateProductsServices } = require("../Services/Product.Services");
 
-module.exports.productControler =async (req,res,next)=>{
+module.exports.postAproduct =async (req,res)=>{
     try {
-        // instance creation do something then save()
-        const product = await postProducts(req.body);
+        const product = await postProductServices(req.body);
        res.status(200).send({
               status:"success",
               data:product,
@@ -15,13 +14,10 @@ module.exports.productControler =async (req,res,next)=>{
             error:error.message
         })
     }
-    // console.log('hello from product route');
 }
-exports.getProductControler = async (req,res,next)=>{
+exports.getProducts = async (req,res)=>{
     try {
        let productObj = {...req.query}
-       //gte,gt,lte,lt
-      //sort,limit,page --> exclude
       const excludeFields = ['sort','limit','page'];
       excludeFields.forEach(field=>delete productObj[field]);
       let queryStr = JSON.stringify(productObj);
@@ -45,7 +41,7 @@ exports.getProductControler = async (req,res,next)=>{
         queries.skip = skip;
         queries.limit = parseInt(limit);
         }
-    const data = await getProducts(productObj,queries);
+    const data = await getProductsServices(productObj,queries);
          res.status(200).send({
             status:"success",
             data:data,
@@ -58,10 +54,10 @@ exports.getProductControler = async (req,res,next)=>{
         })
     }
 }
-exports.updateProductControler = async (req,res,next)=>{
+exports.updateAProduct = async (req,res,next)=>{
     try {
         const {id} = req.params;
-        const data = await updateProduct(id,req.body);
+        const data = await updateProductServices(id,req.body);
          res.status(200).send({
             status:"success",
             data:data,
@@ -75,9 +71,9 @@ exports.updateProductControler = async (req,res,next)=>{
     }
 }
 
-exports.bulkUpdateProduct=async (req,res,next)=>{
+exports.updateProducts=async (req,res,next)=>{
     try {
-       const data = await bulkUpdateProduct(req.body);
+       const data = await updateProductsServices(req.body);
          res.status(200).send({
             status:"success",
             data:data,
@@ -89,4 +85,7 @@ exports.bulkUpdateProduct=async (req,res,next)=>{
             error:error.message
         })
     }
+}
+exports.fileUploadControler = async (req,res,next)=>{
+        res.send(req.files)
 }

@@ -1,7 +1,7 @@
-const {getCategoryService,createCategoryService} = require('../Services/Category.services');
+const {getCategorysServices,createCategoryServices} = require('../Services/Category.services');
 exports.getAllCategory =async(req,res,next)=>{
     try {
-        const category = await getCategoryService();
+        const category = await getCategorysServices();
         res.status(200).send({
             status:"success",
             data:category,
@@ -14,9 +14,9 @@ exports.getAllCategory =async(req,res,next)=>{
         })
     }
 }
-exports.createCategory = async(req,res,next)=>{
+exports.createACategory = async(req,res,next)=>{
     try {
-        const category = await createCategoryService(req.body);
+        const category = await createCategoryServices(req.body);
         res.status(200).send({
             status:"success",
             data:category,

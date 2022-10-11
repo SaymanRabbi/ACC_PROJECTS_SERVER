@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { productControler, getProductControler,updateProductControler, bulkUpdateProduct } = require('../Controllers/product.controller');
+const { postAproduct, getProducts,updateAProduct, updateProducts,fileUploadControler } = require('../Controllers/product.controller');
+const uploader = require('../Middleware/uploader');
 
-router.post('/',productControler)
-router.get('/',getProductControler)
-router.patch('/bulk-update',bulkUpdateProduct)
-router.patch('/:id',updateProductControler)
+
+router.post('/file-upload',uploader.array("image"),fileUploadControler);
+router.post('/',postAproduct)
+router.get('/',getProducts)
+router.patch('/bulk-update',updateAProduct)
+router.patch('/:id',updateProducts)
 
 module.exports = router;

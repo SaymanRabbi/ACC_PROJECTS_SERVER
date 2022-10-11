@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { createBrand,getBrand,singelBrand} = require('../Controllers/brand.controller');
+const { createAbrand,getBrands,getAbrand} = require('../Controllers/brand.controller');
 
-router.post('/',createBrand)
-router.get('/',getBrand)
-router.get('/:id',singelBrand)
+router.post('/',createAbrand)
+router.get('/',getBrands)
+router.get('/:id',getAbrand)
 
 
 module.exports = router;

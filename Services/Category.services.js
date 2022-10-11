@@ -1,9 +1,9 @@
 const Category = require('../Models/Category.js');
-exports.getCategoryService = async()=>{
+exports.getCategorysServices = async()=>{
     const category = await Category.find({});
     return category;
 }
-exports.createCategoryService = async(category)=>{
+exports.createCategoryServices = async(category)=>{
     const newCategory = await Category.create(category);
     return newCategory;
 }

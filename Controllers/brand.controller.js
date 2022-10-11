@@ -1,8 +1,8 @@
-const { postBrand,getBrand,getsingelBrand} = require("../Services/Brand.Services");
+const { postAbrand,getBrands,getAbrand} = require("../Services/Brand.Services");
 
-module.exports.createBrand= async(req,res,next)=>{
+module.exports.createAbrand= async(req,res,next)=>{
     try {
-        const brand = await postBrand(req.body);
+        const brand = await postAbrand(req.body);
        res.status(200).send({
               status:"success",
               data:brand,
@@ -15,9 +15,9 @@ module.exports.createBrand= async(req,res,next)=>{
         })
     }
 }
-exports.getBrand = async(req,res,next)=>{
+exports.getBrands = async(req,res,next)=>{
     try {
-        const brand = await getBrand();
+        const brand = await getBrands();
         res.status(200).send({
             status:"success",
             data:brand,
@@ -30,10 +30,10 @@ exports.getBrand = async(req,res,next)=>{
         })
     }
 }
-exports.singelBrand= async(req,res,next)=>{
+exports.getAbrand= async(req,res,next)=>{
     try {
         const {id} = req.params;
-        const brand = await getsingelBrand(id);
+        const brand = await getAbrand(id);
         res.status(200).send({
             status:"success",
             data:brand,

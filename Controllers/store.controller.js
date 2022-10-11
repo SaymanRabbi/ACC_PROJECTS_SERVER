@@ -1,7 +1,8 @@
-const {getStoreServices,createStoreServices,getsingelStoreServices} = require('../Services/Store.Services');
-module.exports.getStore= async(req,res,next)=>{
+const {getStoresServices,createStoreServices,getsingelStoreServices} = require('../Services/Store.Services');
+module.exports.getStores= async(req,res)=>{
     try {
-        const store = await getStoreServices();
+        const {} = req.query;
+        const store = await getStoresServices();
         res.status(200).send({
             status:"success",
             data:store,
@@ -14,7 +15,7 @@ module.exports.getStore= async(req,res,next)=>{
         })
     }
 }
-exports.createStore = async(req,res,next)=>{
+exports.createAstore = async(req,res)=>{
     try {
         const store = await createStoreServices(req.body);
         res.status(200).send({
@@ -29,7 +30,7 @@ exports.createStore = async(req,res,next)=>{
         })
     }
 }
-exports.singelStore= async(req,res,next)=>{
+exports.getAstore= async(req,res)=>{
     try {
         const {id} = req.params;
         const store = await getsingelStoreServices(id);
