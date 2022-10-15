@@ -6,6 +6,7 @@ const product = require('./Routes/product.route');
 const store = require('./Routes/store.route');
 const category = require('./Routes/category.route');
 const supplier = require('./Routes/supplier.route');
+const stock = require('./Routes/stock.route');
 
 // Middleware
 app.use(cors());
@@ -16,6 +17,7 @@ app.use('/api/v1/store',store);
 app.use('/api/v1/category',category);
 app.use('/api/v1/brand',brandroute);
 app.use("/api/v1/supplier",supplier)
+app.use("/api/v1/stock",stock)
 
 app.get("/",(req,res)=>{
     res.send("Route Is Working!!")

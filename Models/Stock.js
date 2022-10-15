@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const {ObjectId} = mongoose.Schema.Types;
+const validator = require('validator');
 const stockSchema = mongoose.Schema({
     productId:{
         type:ObjectId,
@@ -8,7 +9,6 @@ const stockSchema = mongoose.Schema({
     },
     name:{
         type:String,
-        unique:true,
         lowercase:true,
         required:[true,'Please add a name'],
         trim:true,
@@ -30,21 +30,7 @@ const stockSchema = mongoose.Schema({
       imageUrls:[{
         type:String,
         require:[true,'Please add a image url'],
-        validate:{
-            validator:(v)=>{
-                if(!Array.isArray(v)){
-                    return false;
-                }
-                let isvalid = true;
-                v.forEach(url=>{
-                    if(!validator.isURL(url)){
-                        isvalid = false;
-                    }
-                })
-               return isvalid
-            },
-            message:'Please enter a valid url'
-        }
+        validate:[validator.isURL,'Please add a valid url']
       }],
       price:{
         type:Number,
@@ -108,10 +94,14 @@ const stockSchema = mongoose.Schema({
             type:ObjectId,
             ref:"Supplier",
         }
+    },
+    sellCount:{
+      type:Number,
+      default:0
     }
 },{
     timestamps:true
 })
-const Stock = mongoose.model('Product',stockSchema) 
+const Stock = mongoose.model('Stock',stockSchema) 
 
 module.exports = Stock;
