@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const bcrypt = require('bcryptjs')
 
 const userSchema = mongoose.Schema({
     email:{
@@ -12,6 +13,7 @@ const userSchema = mongoose.Schema({
     },
     password:{
         type:String,
+        trim:true,
         required:[true,'Please add a password'],
         validate:{
             validator:(value)=>validator.isStrongPassword(value,{
@@ -27,9 +29,10 @@ const userSchema = mongoose.Schema({
     confirmPassword:{
         type:String,
         required:[true,'Please add a password'],
+        trim:true,
         validate:{
-            validator:function(value){
-                return value === this.password
+            validator: async function(value){
+                return await bcrypt.compare(value, this.password)
             },
             message:'Passwords do not match'
         }
@@ -51,7 +54,7 @@ const userSchema = mongoose.Schema({
         trim:true,
         maxLength:[100,'Last name cannot exceed 100 characters'],
     },
-    constactNumber:{
+    contactNumber:{
         type:String,
         validate:[validator.isMobilePhone,'Please add a valid contact number'],
     },
@@ -73,3 +76,9 @@ const userSchema = mongoose.Schema({
 },{
     timestamps:true
 })
+userSchema.pre('save',async function(next){
+    this.confirmPassword = undefined;
+    next();
+})
+const User = mongoose.model('User',userSchema)
+module.exports = User

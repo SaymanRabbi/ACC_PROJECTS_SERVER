@@ -2,10 +2,10 @@ const { getSuppliersServices,createSupplierServices,getAsupplierServices } = req
 
 exports.getSuppliers= async(req,res)=>{
     try {
-        const suppliers = await getSuppliersServices();
+        const user = await getSuppliersServices(req.body);
         res.status(200).send({
             status:"success",
-            data:suppliers,
+            data:user,
             message:"Suppliers Fetched Successfully"
         })
     } catch (error) {
