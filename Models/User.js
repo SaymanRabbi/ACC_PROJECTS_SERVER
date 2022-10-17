@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+const crypto = require('crypto')
 
 const userSchema = mongoose.Schema({
     email:{
@@ -68,8 +69,10 @@ const userSchema = mongoose.Schema({
     status:{
         type:String,
         enum:['active','inactive'],
-        default:'active'
+        default:'inactive'
     },
+    confirmationToken:String,
+    confirmationTokenExp:Date,
     passwordChangedAt:Date,
     passwordResetToken:String,
     passwordResetExpires:Date,
@@ -80,5 +83,13 @@ userSchema.pre('save',async function(next){
     this.confirmPassword = undefined;
     next();
 })
+userSchema.methods.tokenConfirmation = async function(){
+    const token = crypto.randomBytes(32).toString('hex');
+    this.confirmationToken = token
+    const date = new Date();
+    date.setDate(date.getDate()+1);
+    this.confirmationTokenExp = date;
+    return token;
+}
 const User = mongoose.model('User',userSchema)
 module.exports = User
